@@ -1,0 +1,329 @@
+
+<style>
+.wrap{padding:1rem 0;font-family:var(--font-sans)}
+.section{margin-bottom:2rem}
+.section-title{font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+
+/* COLOR SWATCHES */
+.swatch-group{display:flex;flex-direction:column;align-items:center;gap:6px}
+.swatch{width:64px;height:64px;border-radius:12px;border:0.5px solid var(--border)}
+.swatch-label{font-size:11px;color:var(--text-secondary);text-align:center;line-height:1.4}
+.swatch-hex{font-size:10px;color:var(--text-muted);font-family:var(--font-mono)}
+
+/* TYPOGRAPHY */
+.type-row{background:var(--surface-1);border:0.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:8px}
+.type-label{font-size:11px;color:var(--text-muted);margin-bottom:4px}
+.type-sample-xl{font-size:28px;font-weight:700;color:var(--text-primary);line-height:1.2;letter-spacing:-.02em}
+.type-sample-h2{font-size:20px;font-weight:600;color:var(--text-primary);line-height:1.3;letter-spacing:-.01em}
+.type-sample-body{font-size:14px;font-weight:400;color:var(--text-secondary);line-height:1.7}
+.type-sample-caption{font-size:12px;font-weight:500;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase}
+
+/* RADIUS */
+.radius-row{display:flex;gap:12px;align-items:flex-end}
+.radius-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.radius-box{background:var(--bg-accent);border:0.5px solid var(--border-accent)}
+.radius-label{font-size:11px;color:var(--text-muted);text-align:center}
+
+/* COMPONENT PREVIEW */
+.comp-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn-primary{background:#6C63FF;color:#fff;border:none;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn-ghost{background:transparent;color:var(--text-primary);border:0.5px solid var(--border-strong);padding:10px 20px;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px}
+.badge-purple{background:#EDE9FF;color:#5B53D6;font-size:11px;font-weight:500;padding:3px 10px;border-radius:100px}
+.badge-blue{background:#E6F0FF;color:#1A6FE8;font-size:11px;font-weight:500;padding:3px 10px;border-radius:100px}
+.badge-dark{background:#1A1A2E;color:#A0A0C0;font-size:11px;font-weight:500;padding:3px 10px;border-radius:100px}
+
+/* GLASS CARD */
+.glass-card{background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.15);border-radius:16px;padding:1rem 1.25rem;backdrop-filter:blur(12px);color:var(--text-primary)}
+.dark-card{background:#13132A;border:0.5px solid rgba(108,99,255,0.25);border-radius:16px;padding:1rem 1.25rem;color:#fff}
+.light-card{background:#fff;border:0.5px solid var(--border);border-radius:16px;padding:1rem 1.25rem;box-shadow:0 2px 12px rgba(108,99,255,0.08)}
+
+/* STAT CARD */
+.stat-mini{background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;min-width:100px}
+.stat-mini-n{font-size:20px;font-weight:600;color:var(--text-primary)}
+.stat-mini-l{font-size:11px;color:var(--text-muted);margin-top:2px}
+.stat-mini-tag{font-size:10px;font-weight:500;color:#6C63FF;background:#EDE9FF;padding:2px 7px;border-radius:100px;display:inline-block;margin-top:4px}
+
+/* GRADIENT BG PREVIEW */
+.grad-prev{border-radius:12px;padding:1.25rem;color:#1a1a3e;font-size:13px;font-weight:500;border:0.5px solid var(--border)}
+.grad1{background:linear-gradient(135deg,#E8E4FF 0%,#D4E8FF 50%,#F0F4FF 100%)}
+.grad2{background:linear-gradient(135deg,#13132A 0%,#1E1B4B 60%,#2D2060 100%);color:#E8E4FF}
+
+/* ICONS */
+.icon-grid{display:flex;gap:12px;flex-wrap:wrap}
+.icon-item{display:flex;flex-direction:column;align-items:center;gap:6px;width:60px}
+.icon-box{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;border:0.5px solid var(--border);background:var(--surface-1)}
+.icon-box i{font-size:20px;color:#6C63FF}
+.icon-name{font-size:10px;color:var(--text-muted);text-align:center;line-height:1.3}
+
+/* SPACING */
+.space-row{display:flex;gap:8px;align-items:flex-end}
+.space-item{display:flex;flex-direction:column;align-items:center;gap:4px}
+.space-bar{background:#6C63FF;border-radius:3px;width:24px;opacity:.7}
+.space-val{font-size:10px;color:var(--text-muted);font-family:var(--font-mono)}
+
+/* DIVIDER */
+.divider{border:none;border-top:0.5px solid var(--border);margin:1.5rem 0}
+
+/* PHOTO STYLE */
+.photo-style{display:flex;gap:10px}
+.photo-box{border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#c8c0f0,#a0b8f0);display:flex;align-items:center;justify-content:center;color:#5B53D6;font-size:11px;font-weight:500}
+.photo-label{font-size:11px;color:var(--text-muted);text-align:center;margin-top:6px}
+</style>
+
+<div class="wrap">
+
+  <div class="section">
+    <div class="section-title">Palette de couleurs</div>
+    <div class="row">
+      <div class="swatch-group">
+        <div class="swatch" style="background:#6C63FF"></div>
+        <div class="swatch-label">Primaire<br>Violet</div>
+        <div class="swatch-hex">#6C63FF</div>
+      </div>
+      <div class="swatch-group">
+        <div class="swatch" style="background:#5B53D6"></div>
+        <div class="swatch-label">Violet<br>foncé</div>
+        <div class="swatch-hex">#5B53D6</div>
+      </div>
+      <div class="swatch-group">
+        <div class="swatch" style="background:#EDE9FF"></div>
+        <div class="swatch-label">Violet<br>clair</div>
+        <div class="swatch-hex">#EDE9FF</div>
+      </div>
+      <div class="swatch-group">
+        <div class="swatch" style="background:#FFFFFF;border:1px solid #e0e0e0"></div>
+        <div class="swatch-label">Blanc<br>pur</div>
+        <div class="swatch-hex">#FFFFFF</div>
+      </div>
+      <div class="swatch-group">
+        <div class="swatch" style="background:#F0F4FF"></div>
+        <div class="swatch-label">Blanc<br>froid</div>
+        <div class="swatch-hex">#F0F4FF</div>
+      </div>
+      <div class="swatch-group">
+        <div class="swatch" style="background:#E8E4FF"></div>
+        <div class="swatch-label">Lavande<br>bg</div>
+        <div class="swatch-hex">#E8E4FF</div>
+      </div>
+      <div class="swatch-group">
+        <div class="swatch" style="background:#13132A"></div>
+        <div class="swatch-label">Dark<br>navy</div>
+        <div class="swatch-hex">#13132A</div>
+      </div>
+      <div class="swatch-group">
+        <div class="swatch" style="background:#1E1B4B"></div>
+        <div class="swatch-label">Dark<br>violet</div>
+        <div class="swatch-hex">#1E1B4B</div>
+      </div>
+      <div class="swatch-group">
+        <div class="swatch" style="background:#1A6FE8"></div>
+        <div class="swatch-label">Bleu<br>accent</div>
+        <div class="swatch-hex">#1A6FE8</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">Backgrounds & Dégradés</div>
+    <div class="row">
+      <div style="flex:1;min-width:180px">
+        <div class="grad-prev grad1">Hero background<br><span style="font-size:11px;opacity:.7">Lavande → Bleu froid → Blanc</span></div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Mode light — sections principales</div>
+      </div>
+      <div style="flex:1;min-width:180px">
+        <div class="grad-prev grad2">Dark sections<br><span style="font-size:11px;opacity:.7">Navy → Violet profond</span></div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Sections dark (features, CTA final)</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">Typographie — Inter (Google Fonts)</div>
+    <div class="type-row">
+      <div class="type-label">H1 — 56px / 700 / tracking -0.02em</div>
+      <div class="type-sample-xl">Your SEO agent,<br>on autopilot.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">H2 — 36px / 600 / tracking -0.01em</div>
+      <div class="type-sample-h2">How RankPilot works</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Body — 16px / 400 / line-height 1.7</div>
+      <div class="type-sample-body">Stop paying $3,000/month for an SEO agency. RankPilot analyzes your site, finds the right keywords, writes better articles than your competitors, and publishes them automatically.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Label / Tag — 12px / 500 / uppercase / tracking 0.06em</div>
+      <div class="type-sample-caption">Trusted by 2,400+ businesses</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">Composants UI</div>
+    <div class="comp-row" style="margin-bottom:12px">
+      <button class="btn-primary"><i class="ti ti-player-play" aria-hidden="true"></i> Get started free</button>
+      <button class="btn-ghost"><i class="ti ti-search" aria-hidden="true"></i> See how it works</button>
+    </div>
+    <div class="comp-row">
+      <span class="badge-purple">AI-powered</span>
+      <span class="badge-blue">WordPress native</span>
+      <span class="badge-dark">No credit card</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">Cards — 3 modes (comme le site)</div>
+    <div class="row">
+      <div style="flex:1;min-width:160px">
+        <div class="light-card">
+          <div style="font-size:12px;color:#6C63FF;font-weight:500;margin-bottom:6px">✦ Keyword analysis</div>
+          <div style="font-size:15px;font-weight:600;color:#1a1a3e;margin-bottom:4px">+247%</div>
+          <div style="font-size:12px;color:#888">organic traffic in 90 days</div>
+        </div>
+        <div class="photo-label">Light card (sections claires)</div>
+      </div>
+      <div style="flex:1;min-width:160px">
+        <div class="dark-card">
+          <div style="font-size:12px;color:#9B96FF;font-weight:500;margin-bottom:6px">✦ Auto-publish</div>
+          <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:4px">142 articles</div>
+          <div style="font-size:12px;color:#8080A0">published this month</div>
+        </div>
+        <div class="photo-label">Dark card (sections navy)</div>
+      </div>
+      <div style="flex:1;min-width:160px">
+        <div style="background:rgba(108,99,255,0.08);border:0.5px solid rgba(108,99,255,0.2);border-radius:16px;padding:1rem 1.25rem">
+          <div style="font-size:12px;color:#6C63FF;font-weight:500;margin-bottom:6px">✦ RankPilot Score</div>
+          <div style="font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:4px">94 / 100</div>
+          <div style="font-size:12px;color:var(--text-muted)">article optimization</div>
+        </div>
+        <div class="photo-label">Violet tinted card</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">Icônes — Hugeicons ou Five Icons (outline, 24px)</div>
+    <div class="icon-grid">
+      <div class="icon-item">
+        <div class="icon-box"><i class="ti ti-search" aria-hidden="true"></i></div>
+        <div class="icon-name">Keyword<br>research</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-box"><i class="ti ti-robot" aria-hidden="true"></i></div>
+        <div class="icon-name">AI agent</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-box"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+        <div class="icon-name">Analytics</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-box"><i class="ti ti-world" aria-hidden="true"></i></div>
+        <div class="icon-name">WordPress</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-box"><i class="ti ti-link" aria-hidden="true"></i></div>
+        <div class="icon-name">Internal<br>links</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-box"><i class="ti ti-refresh" aria-hidden="true"></i></div>
+        <div class="icon-name">Auto-update</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-box"><i class="ti ti-lock" aria-hidden="true"></i></div>
+        <div class="icon-name">Secure</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-box"><i class="ti ti-bolt" aria-hidden="true"></i></div>
+        <div class="icon-name">Fast<br>publish</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:10px">Style : outline uniquement, 24px, couleur #6C63FF sur fond blanc ou #9B96FF sur fond dark. Pas de filled.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">Border radius</div>
+    <div class="radius-row">
+      <div class="radius-item">
+        <div class="radius-box" style="width:40px;height:40px;border-radius:4px"></div>
+        <div class="radius-label">4px<br>inputs</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="width:48px;height:48px;border-radius:8px"></div>
+        <div class="radius-label">8px<br>badges</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="width:56px;height:56px;border-radius:12px"></div>
+        <div class="radius-label">12px<br>cards</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="width:64px;height:64px;border-radius:16px"></div>
+        <div class="radius-label">16px<br>sections</div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="width:44px;height:44px;border-radius:100px"></div>
+        <div class="radius-label">100px<br>boutons</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">Photos de personnes — style de traitement</div>
+    <div class="photo-style">
+      <div>
+        <div class="photo-box" style="width:100px;height:120px;border-radius:16px;background:linear-gradient(160deg,#c8c0f0 0%,#a8b8f0 100%)">
+          <i class="ti ti-user" style="font-size:36px;color:#5B53D6" aria-hidden="true"></i>
+        </div>
+        <div class="photo-label">Carré arrondi<br>16px radius</div>
+      </div>
+      <div>
+        <div class="photo-box" style="width:90px;height:90px;border-radius:50%;background:linear-gradient(160deg,#c8c0f0 0%,#a8b8f0 100%)">
+          <i class="ti ti-user" style="font-size:30px;color:#5B53D6" aria-hidden="true"></i>
+        </div>
+        <div class="photo-label">Cercle<br>avatars équipe</div>
+      </div>
+      <div style="flex:1">
+        <div style="background:var(--surface-1);border:0.5px solid var(--border);border-radius:12px;padding:.75rem;font-size:12px;color:var(--text-secondary);line-height:1.6">
+          <strong style="color:var(--text-primary)">Traitement photos :</strong><br>
+          • Fond neutre ou légèrement violet/bleu<br>
+          • Pas de fond blanc plat — utilise une teinte froide<br>
+          • Radius 16px pour les portraits rectangulaires<br>
+          • Légère ombre portée : 0 8px 24px rgba(108,99,255,0.15)<br>
+          • Pas de filtre couleur sur la photo elle-même
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">Espacement — système 8pt</div>
+    <div class="space-row">
+      <div class="space-item"><div class="space-bar" style="height:8px"></div><div class="space-val">4px</div></div>
+      <div class="space-item"><div class="space-bar" style="height:16px"></div><div class="space-val">8px</div></div>
+      <div class="space-item"><div class="space-bar" style="height:24px"></div><div class="space-val">12px</div></div>
+      <div class="space-item"><div class="space-bar" style="height:32px"></div><div class="space-val">16px</div></div>
+      <div class="space-item"><div class="space-bar" style="height:48px"></div><div class="space-val">24px</div></div>
+      <div class="space-item"><div class="space-bar" style="height:64px"></div><div class="space-val">32px</div></div>
+      <div class="space-item"><div class="space-bar" style="height:96px"></div><div class="space-val">48px</div></div>
+      <div class="space-item"><div class="space-bar" style="height:128px"></div><div class="space-val">64px</div></div>
+      <div class="space-item"><div class="space-bar" style="height:160px"></div><div class="space-val">80px</div></div>
+    </div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:8px">Padding sections : 80-100px vertical. Gap entre cards : 24px. Padding interne card : 24-32px.</div>
+  </div>
+
+</div>
