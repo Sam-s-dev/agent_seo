@@ -46,6 +46,16 @@ app.include_router(articles.router)
 # In production, this would attempt a simple "SELECT 1" on Supabase/Postgres
 DB_HEALTHY = True
 
+@app.get("/")
+async def root():
+    """Welcome root endpoint."""
+    return {
+        "message": "Welcome to RankPilot Core API",
+        "status": "online",
+        "documentation": "/docs",
+        "health": "/health"
+    }
+
 @app.get("/health", tags=["system"])
 async def health_check():
     """System Health Check endpoint.
