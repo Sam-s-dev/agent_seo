@@ -4,21 +4,17 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { 
   Bot, 
-  Link2, 
-  Plus, 
   Sparkles, 
-  Search, 
-  TrendingUp, 
   LogOut, 
   CheckCircle, 
   AlertCircle, 
   Loader2,
   FileText,
-  Eye,
   Globe,
-  Settings,
-  ArrowDown
+  ArrowDown,
+  Languages
 } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
 
 interface Article {
   id: string;
@@ -41,6 +37,7 @@ interface Site {
 }
 
 export default function Dashboard() {
+  const { language, setLanguage, t } = useTranslation();
   const router = useRouter();
   
   // Sites States
@@ -64,8 +61,13 @@ export default function Dashboard() {
   const [genLoading, setGenLoading] = useState(false);
   const [genSuccess, setGenSuccess] = useState("");
 
-  // Session user email (mock or real)
+  // Session user email
   const [userEmail, setUserEmail] = useState("admin@example.com");
+
+  // Get API Base URL
+  const getApiUrl = () => {
+    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  };
 
   // Load Initial Data
   useEffect(() => {
@@ -74,7 +76,6 @@ export default function Dashboard() {
   }, [statusFilter]);
 
   const getAuthToken = () => {
-    // Read from cookie
     const name = "sb-access-token=";
     const decodedCookie = decodeURIComponent(document.cookie);
     const ca = decodedCookie.split(';');
@@ -93,7 +94,7 @@ export default function Dashboard() {
   const fetchSites = async () => {
     const token = getAuthToken();
     try {
-      const res = await fetch("http://localhost:8000/sites/", {
+      const res = await fetch(`${getApiUrl()}/sites/`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       if (res.ok) {
@@ -108,7 +109,7 @@ export default function Dashboard() {
   const fetchInitialArticles = async () => {
     setArticlesLoading(true);
     const token = getAuthToken();
-    let url = "http://localhost:8000/articles/?limit=10";
+    let url = `${getApiUrl()}/articles/?limit=10`;
     if (statusFilter !== "all") {
       url += `&status=${statusFilter}`;
     }
@@ -136,7 +137,7 @@ export default function Dashboard() {
     setArticlesLoading(true);
     const token = getAuthToken();
     
-    let url = `http://localhost:8000/articles/?limit=10&cursor=${cursor}`;
+    let url = `${getApiUrl()}/articles/?limit=10&cursor=${cursor}`;
     if (statusFilter !== "all") {
       url += `&status=${statusFilter}`;
     }
@@ -167,7 +168,7 @@ export default function Dashboard() {
     const token = getAuthToken();
 
     try {
-      const res = await fetch("http://localhost:8000/sites/", {
+      const res = await fetch(`${getApiUrl()}/sites/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -182,12 +183,12 @@ export default function Dashboard() {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.detail || "Échec de connexion au site");
+        throw new Error(data.detail || "Échec de connexion au site / WordPress connection failed");
       }
 
       const newSite = await res.json();
       setSites((prev) => [...prev, newSite]);
-      setSiteSuccess("Site WordPress connecté avec succès !");
+      setSiteSuccess("Site WordPress connecté avec succès ! / WordPress site successfully connected!");
       setWpUrl("");
       setWpUsername("");
       setWpPassword("");
@@ -204,14 +205,14 @@ export default function Dashboard() {
     setGenSuccess("");
     if (!newKeyword) return;
     if (sites.length === 0) {
-      alert("Veuillez d'abord connecter un site WordPress !");
+      alert("Veuillez d'abord connecter un site WordPress / Please connect a WordPress site first.");
       return;
     }
     setGenLoading(true);
     const token = getAuthToken();
 
     try {
-      const res = await fetch("http://localhost:8000/articles/generate", {
+      const res = await fetch(`${getApiUrl()}/articles/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -224,7 +225,7 @@ export default function Dashboard() {
       });
 
       if (res.ok) {
-        setGenSuccess(`Génération lancée pour : "${newKeyword}". Elle apparaîtra bientôt.`);
+        setGenSuccess(language === "en" ? `Generation started for: "${newKeyword}"` : `Génération lancée pour : "${newKeyword}"`);
         setNewKeyword("");
       }
     } catch (e) {
@@ -238,7 +239,7 @@ export default function Dashboard() {
   const handlePublish = async (id: string) => {
     const token = getAuthToken();
     try {
-      const res = await fetch(`http://localhost:8000/articles/publish/${id}`, {
+      const res = await fetch(`${getApiUrl()}/articles/publish/${id}`, {
         method: "POST",
         headers: { "Authorization": `Bearer ${token}` }
       });
@@ -254,7 +255,6 @@ export default function Dashboard() {
   };
 
   const handleLogout = () => {
-    // Delete cookie and redirect
     document.cookie = "sb-access-token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     router.push("/");
   };
@@ -266,6 +266,10 @@ export default function Dashboard() {
     return "text-red-400 border-red-500/30 bg-red-500/10";
   };
 
+  const toggleLanguage = () => {
+    setLanguage(language === "en" ? "fr" : "en");
+  };
+
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100 font-sans">
       {/* Top Header */}
@@ -275,11 +279,20 @@ export default function Dashboard() {
             <div className="p-2 bg-gradient-to-tr from-violet-600 to-indigo-500 rounded-xl shadow-lg">
               <Bot className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold tracking-tight text-white">RankPilot</span>
+            <span className="text-lg font-bold tracking-tight text-white">{t("brand")}</span>
             <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-violet-950 border border-violet-900 text-violet-400">Dashboard</span>
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Language Selector */}
+            <button 
+              onClick={toggleLanguage} 
+              className="p-2 rounded-xl border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-900 text-xs font-bold text-violet-400 hover:text-violet-300 flex items-center gap-1.5 transition-colors"
+            >
+              <Languages className="w-4 h-4" />
+              {language === "en" ? "FR" : "EN"}
+            </button>
+
             <div className="hidden sm:block text-right">
               <div className="text-xs text-neutral-400 font-medium">{userEmail}</div>
               <div className="text-[10px] font-mono text-emerald-400">Plan Starter</div>
@@ -287,7 +300,7 @@ export default function Dashboard() {
             <button 
               onClick={handleLogout}
               className="p-2.5 rounded-xl border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-900 text-neutral-400 hover:text-white transition-all"
-              title="Déconnexion"
+              title={t("logout")}
             >
               <LogOut className="w-4 h-4" />
             </button>
@@ -304,7 +317,7 @@ export default function Dashboard() {
           <div className="bg-neutral-900/40 border border-neutral-800 rounded-2xl p-6 backdrop-blur-xl">
             <h3 className="text-sm font-bold text-neutral-300 uppercase tracking-wider mb-4 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-violet-400 animate-pulse-subtle" />
-              Générer un article IA
+              {t("dashGenerateTitle")}
             </h3>
             
             {genSuccess && (
@@ -319,7 +332,7 @@ export default function Dashboard() {
                   type="text"
                   value={newKeyword}
                   onChange={(e) => setNewKeyword(e.target.value)}
-                  placeholder="Mot-clé ciblé (ex: expert seo autonome)"
+                  placeholder={t("dashKeywordPlaceholder")}
                   className="w-full px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-xl text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-violet-600 transition-all"
                   required
                 />
@@ -329,7 +342,7 @@ export default function Dashboard() {
                 disabled={genLoading}
                 className="w-full py-2.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-50 text-white font-bold rounded-xl text-xs transition-all flex justify-center items-center gap-2"
               >
-                {genLoading ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : "Lancer l'Agent SEO"}
+                {genLoading ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : t("dashButtonGenerate")}
               </button>
             </form>
           </div>
@@ -338,7 +351,7 @@ export default function Dashboard() {
           <div className="bg-neutral-900/40 border border-neutral-800 rounded-2xl p-6 backdrop-blur-xl">
             <h3 className="text-sm font-bold text-neutral-300 uppercase tracking-wider mb-4 flex items-center gap-2">
               <Globe className="w-4 h-4 text-blue-400" />
-              Connecter un site WordPress
+              {t("dashConnectTitle")}
             </h3>
 
             {siteError && (
@@ -361,7 +374,7 @@ export default function Dashboard() {
                   type="url"
                   value={wpUrl}
                   onChange={(e) => setWpUrl(e.target.value)}
-                  placeholder="https://votre-site.com"
+                  placeholder={t("dashUrlPlaceholder")}
                   className="w-full px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-xl text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-violet-600 transition-all"
                   required
                 />
@@ -371,7 +384,7 @@ export default function Dashboard() {
                   type="text"
                   value={wpUsername}
                   onChange={(e) => setWpUsername(e.target.value)}
-                  placeholder="Identifiant WordPress admin"
+                  placeholder={t("dashWpUserPlaceholder")}
                   className="w-full px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-xl text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-violet-600 transition-all"
                   required
                 />
@@ -381,7 +394,7 @@ export default function Dashboard() {
                   type="password"
                   value={wpPassword}
                   onChange={(e) => setWpPassword(e.target.value)}
-                  placeholder="Mot de passe d'application WP"
+                  placeholder={t("dashWpPassPlaceholder")}
                   className="w-full px-4 py-2.5 bg-neutral-950 border border-neutral-800 rounded-xl text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-violet-600 transition-all"
                   required
                 />
@@ -391,14 +404,14 @@ export default function Dashboard() {
                 disabled={siteLoading}
                 className="w-full py-2.5 border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 disabled:opacity-50 text-white font-bold rounded-xl text-xs transition-all flex justify-center items-center gap-2"
               >
-                {siteLoading ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : "Valider & Connecter"}
+                {siteLoading ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : t("dashButtonConnect")}
               </button>
             </form>
 
             {/* List of Connected sites */}
             {sites.length > 0 && (
               <div className="mt-6 pt-5 border-t border-neutral-800/80 space-y-2">
-                <h4 className="text-xs font-bold text-neutral-400 uppercase mb-2">Sites Connectés ({sites.length})</h4>
+                <h4 className="text-xs font-bold text-neutral-400 uppercase mb-2">{t("dashConnectedSites")} ({sites.length})</h4>
                 {sites.map((s) => (
                   <div key={s.id} className="flex justify-between items-center p-2.5 bg-neutral-950/60 border border-neutral-900 rounded-lg text-xs">
                     <span className="font-medium truncate max-w-[150px]">{s.url.replace(/^https?:\/\//, "")}</span>
@@ -418,8 +431,8 @@ export default function Dashboard() {
           {/* Header Filter Row */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 bg-neutral-900/20 border border-neutral-850 rounded-2xl">
             <div>
-              <h2 className="text-lg font-bold text-white">Articles rédigés par l&apos;IA</h2>
-              <p className="text-xs text-neutral-500">Pagination par curseur active &bull; Max 20 articles/page</p>
+              <h2 className="text-lg font-bold text-white">{t("dashWelcome")}</h2>
+              <p className="text-xs text-neutral-500">{t("dashSubtitle")}</p>
             </div>
             
             {/* Status Filter buttons */}
@@ -434,7 +447,7 @@ export default function Dashboard() {
                       : "text-neutral-500 hover:text-neutral-300"
                   }`}
                 >
-                  {filt === "all" ? "tous" : filt === "published" ? "publiés" : "brouillons"}
+                  {filt === "all" ? t("dashFilterAll") : filt === "published" ? t("dashFilterPublished") : t("dashFilterDrafts")}
                 </button>
               ))}
             </div>
@@ -445,8 +458,8 @@ export default function Dashboard() {
             {articles.length === 0 && !articlesLoading ? (
               <div className="p-12 text-center border border-neutral-900 rounded-2xl bg-neutral-900/10">
                 <FileText className="w-10 h-10 text-neutral-700 mx-auto mb-3" />
-                <h4 className="text-sm font-semibold text-neutral-400">Aucun article disponible</h4>
-                <p className="text-xs text-neutral-600 mt-1">Générez votre premier article IA pour démarrer.</p>
+                <h4 className="text-sm font-semibold text-neutral-400">{t("dashNoArticles")}</h4>
+                <p className="text-xs text-neutral-600 mt-1">{t("dashNoArticlesDesc")}</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 gap-4">
@@ -465,7 +478,7 @@ export default function Dashboard() {
                             ? "bg-green-500/10 border-green-500/20 text-green-400"
                             : "bg-amber-500/10 border-amber-500/20 text-amber-400"
                         }`}>
-                          {art.status === "published" ? "Publié" : "Brouillon"}
+                          {art.status === "published" ? (language === "en" ? "Published" : "Publié") : (language === "en" ? "Draft" : "Brouillon")}
                         </span>
                         <span className="text-[10px] text-neutral-500">
                           {new Date(art.created_at).toLocaleDateString()}
@@ -475,7 +488,7 @@ export default function Dashboard() {
                         {art.title}
                       </h4>
                       <p className="text-xs text-neutral-400 font-medium">
-                        Mot-clé : <span className="text-violet-300 font-semibold">{art.keyword}</span>
+                        {language === "en" ? "Keyword" : "Mot-clé"} : <span className="text-violet-300 font-semibold">{art.keyword}</span>
                       </p>
                       <p className="text-[11px] text-neutral-500 line-clamp-2">
                         {art.meta_desc}
@@ -486,7 +499,7 @@ export default function Dashboard() {
                     <div className="flex items-center gap-4 justify-between md:justify-end border-t md:border-t-0 pt-3 md:pt-0 border-neutral-850">
                       {/* SEO Score Badge */}
                       <div className={`px-3 py-2 border rounded-xl flex flex-col items-center justify-center min-w-[70px] ${getScoreColor(art.score)}`}>
-                        <span className="text-xs font-semibold text-neutral-400">Score</span>
+                        <span className="text-xs font-semibold text-neutral-400">{t("dashScoreText")}</span>
                         <span className="text-base font-extrabold">{art.score}</span>
                       </div>
 
@@ -496,7 +509,7 @@ export default function Dashboard() {
                           onClick={() => handlePublish(art.id)}
                           className="px-4.5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold rounded-xl transition-all shadow-lg shadow-violet-600/10"
                         >
-                          Publier WP
+                          {t("dashPublishWp")}
                         </button>
                       )}
                     </div>
@@ -511,16 +524,16 @@ export default function Dashboard() {
                 <button
                   onClick={loadMoreArticles}
                   disabled={articlesLoading}
-                  className="px-6 py-3 border border-neutral-800 bg-neutral-900 hover:bg-neutral-850 hover:text-white disabled:opacity-50 text-neutral-300 font-semibold rounded-xl text-xs transition-all inline-flex items-center gap-2 hover:scale-[1.02]"
+                  className="px-6 py-3 border border-neutral-800 bg-neutral-900 hover:bg-neutral-855 hover:text-white disabled:opacity-50 text-neutral-300 font-semibold rounded-xl text-xs transition-all inline-flex items-center gap-2 hover:scale-[1.02]"
                 >
                   {articlesLoading ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      Chargement...
+                      {t("dashLoadingMore")}
                     </>
                   ) : (
                     <>
-                      Charger plus d&apos;articles
+                      {t("dashLoadMore")}
                       <ArrowDown className="w-3.5 h-3.5" />
                     </>
                   )}
