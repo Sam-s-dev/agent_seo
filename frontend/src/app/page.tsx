@@ -13,14 +13,12 @@ import {
   HelpCircle,
   AlertTriangle,
   Globe,
-  Settings,
   ChevronDown,
   Languages,
   Check,
   Search,
   BookOpen,
   Link2,
-  RefreshCw,
   Zap
 } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
@@ -37,7 +35,7 @@ export default function Home() {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
-  // Pricing features
+  // Pricing plans
   const pricingPlans = [
     {
       name: t("priceStarterTitle"),
@@ -118,10 +116,11 @@ export default function Home() {
       <header className="sticky top-0 z-50 border-b border-[rgba(108,99,255,0.12)] bg-white/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-gradient-to-tr from-[#6C63FF] to-[#5B53D6] rounded-xl shadow-lg">
-              <Bot className="w-5 h-5 text-white" />
+            {/* Real Logo from public folder */}
+            <div className="w-10 h-10 rounded-xl overflow-hidden border border-[rgba(108,99,255,0.2)] shadow-md hover:scale-105 transition-transform duration-200">
+              <img src="/logo.jpeg" alt="RankPilot Logo" className="w-full h-full object-cover" />
             </div>
-            <span className="text-xl font-bold tracking-tight text-[#1a1a3e]">
+            <span className="text-xl font-bold tracking-tight text-[#1a1a3e] hover:text-[#6C63FF] transition-colors">
               {t("brand")}
             </span>
           </div>
@@ -161,7 +160,8 @@ export default function Home() {
       <section className="bg-hero-light pt-20 pb-24 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 text-left space-y-6">
-            <div className="badge-purple animate-pulse-subtle">
+            <div className="badge-purple animate-pulse-subtle flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5" />
               {t("subTitleBadge")}
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-[56px] font-extrabold tracking-tight text-[#1a1a3e] leading-[1.15]">
@@ -172,9 +172,9 @@ export default function Home() {
               {t("heroSubtitle")}
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Link href="/login" className="btn-primary">
+              <Link href="/login" className="btn-primary group">
                 {t("ctaStart")}
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <a href="#how-it-works" className="btn-ghost">
                 {t("ctaFeatures")}
@@ -188,17 +188,22 @@ export default function Home() {
             <div className="relative bg-white border border-[rgba(108,99,255,0.12)] rounded-2xl p-6 shadow-xl">
               <div className="flex items-center justify-between pb-3 border-b border-[#F0F0FA] mb-5">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-400" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-450" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-450" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-green-450" />
                 </div>
                 <span className="text-[10px] font-mono text-[#8888a8]">rankpilot.ai/live</span>
               </div>
 
               <div className="space-y-4">
-                <div className="p-4 bg-[#F8F7FF] rounded-xl border border-[rgba(108,99,255,0.06)]">
-                  <div className="text-[11px] text-[#8888a8] uppercase font-bold tracking-wider">{t("previewArticlesWritten")}</div>
-                  <div className="text-2xl font-extrabold text-[#1a1a3e] mt-1">48 <span className="text-xs text-green-500 font-bold ml-1">+12 {language === "en" ? "this month" : "ce mois"}</span></div>
+                <div className="p-4 bg-[#F8F7FF] rounded-xl border border-[rgba(108,99,255,0.06)] flex items-center justify-between">
+                  <div>
+                    <div className="text-[11px] text-[#8888a8] uppercase font-bold tracking-wider">{t("previewArticlesWritten")}</div>
+                    <div className="text-2xl font-extrabold text-[#1a1a3e] mt-1">48 <span className="text-xs text-green-500 font-bold ml-1">+12 {language === "en" ? "this month" : "ce mois"}</span></div>
+                  </div>
+                  <div className="w-9 h-9 rounded-lg bg-[#EDE9FF] border border-[rgba(108,99,255,0.2)] text-[#6C63FF] flex items-center justify-center animate-float">
+                    <Zap className="w-5 h-5" />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -260,19 +265,23 @@ export default function Home() {
                 : "Embaucher une agence coûte plus de 3 000 $/mois sans aucune garantie. Rédiger vous-même demande des heures de recherche de mots-clés, de structuration, de maillage interne et de configuration."}
             </p>
 
-            <div className="space-y-3.5 pt-4">
+            <div className="space-y-4 pt-4">
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                <div className="p-1 rounded-full bg-red-100 text-red-500 shrink-0">
+                  <AlertTriangle className="w-4 h-4" />
+                </div>
                 <span className="text-sm font-medium text-[#555580]">{language === "en" ? "Waste of budget on generic agencies" : "Perte de budget dans des agences génériques"}</span>
               </div>
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                <div className="p-1 rounded-full bg-red-100 text-red-500 shrink-0">
+                  <AlertTriangle className="w-4 h-4" />
+                </div>
                 <span className="text-sm font-medium text-[#555580]">{language === "en" ? "Unproductive hours spent formatting and publishing" : "Heures improductives passées à mettre en page et publier"}</span>
               </div>
             </div>
           </div>
 
-          <div className="card-violet p-8 relative overflow-hidden">
+          <div className="card-violet p-8 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-40 h-40 bg-[#6C63FF]/5 rounded-full blur-[80px]" />
             <div className="space-y-6 relative">
               <span className="badge-purple">{language === "en" ? "THE RANKPILOT SOLUTION" : "LA SOLUTION RANKPILOT"}</span>
@@ -285,11 +294,11 @@ export default function Home() {
               
               <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[rgba(108,99,255,0.12)]">
                 <div>
-                  <div className="text-2xl font-extrabold text-[#6C63FF]">10x</div>
+                  <div className="text-2xl font-extrabold text-[#6C63FF] group-hover:scale-105 transition-transform duration-200">10x</div>
                   <div className="text-[11px] text-[#8888a8] mt-1 font-semibold uppercase">{language === "en" ? "FASTER GROWTH" : "CROISSANCE PLUS RAPIDE"}</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-extrabold text-[#6C63FF]">95%</div>
+                  <div className="text-2xl font-extrabold text-[#6C63FF] group-hover:scale-105 transition-transform duration-200">95%</div>
                   <div className="text-[11px] text-[#8888a8] mt-1 font-semibold uppercase">{language === "en" ? "LESS EXPENSIVE" : "MOINS CHER"}</div>
                 </div>
               </div>
@@ -309,26 +318,34 @@ export default function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="space-y-3 text-left">
-            <div className="w-10 h-10 rounded-full bg-[#EDE9FF] border border-[rgba(108,99,255,0.2)] text-[#6C63FF] font-bold flex items-center justify-center text-sm">1</div>
+          <div className="space-y-4 text-left group">
+            <div className="w-12 h-12 rounded-full bg-[#EDE9FF] border border-[rgba(108, 99, 255, 0.2)] text-[#6C63FF] font-extrabold flex items-center justify-center text-base shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+              1
+            </div>
             <h4 className="font-bold text-[#1a1a3e] text-base">{t("step1Title")}</h4>
             <p className="text-xs text-[#555580] leading-relaxed">{t("step1Desc")}</p>
           </div>
 
-          <div className="space-y-3 text-left">
-            <div className="w-10 h-10 rounded-full bg-[#EDE9FF] border border-[rgba(108,99,255,0.2)] text-[#6C63FF] font-bold flex items-center justify-center text-sm">2</div>
+          <div className="space-y-4 text-left group">
+            <div className="w-12 h-12 rounded-full bg-[#EDE9FF] border border-[rgba(108, 99, 255, 0.2)] text-[#6C63FF] font-extrabold flex items-center justify-center text-base shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+              2
+            </div>
             <h4 className="font-bold text-[#1a1a3e] text-base">{t("step2Title")}</h4>
             <p className="text-xs text-[#555580] leading-relaxed">{t("step2Desc")}</p>
           </div>
 
-          <div className="space-y-3 text-left">
-            <div className="w-10 h-10 rounded-full bg-[#EDE9FF] border border-[rgba(108,99,255,0.2)] text-[#6C63FF] font-bold flex items-center justify-center text-sm">3</div>
+          <div className="space-y-4 text-left group">
+            <div className="w-12 h-12 rounded-full bg-[#EDE9FF] border border-[rgba(108, 99, 255, 0.2)] text-[#6C63FF] font-extrabold flex items-center justify-center text-base shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+              3
+            </div>
             <h4 className="font-bold text-[#1a1a3e] text-base">{t("step3Title")}</h4>
             <p className="text-xs text-[#555580] leading-relaxed">{t("step3Desc")}</p>
           </div>
 
-          <div className="space-y-3 text-left">
-            <div className="w-10 h-10 rounded-full bg-[#EDE9FF] border border-[rgba(108,99,255,0.2)] text-[#6C63FF] font-bold flex items-center justify-center text-sm">4</div>
+          <div className="space-y-4 text-left group">
+            <div className="w-12 h-12 rounded-full bg-[#EDE9FF] border border-[rgba(108, 99, 255, 0.2)] text-[#6C63FF] font-extrabold flex items-center justify-center text-base shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+              4
+            </div>
             <h4 className="font-bold text-[#1a1a3e] text-base">{t("step4Title")}</h4>
             <p className="text-xs text-[#555580] leading-relaxed">{t("step4Desc")}</p>
           </div>
@@ -346,33 +363,37 @@ export default function Home() {
             <p className="text-sm text-[#A0A0C0] leading-relaxed">{t("featuresSubtitle")}</p>
             
             <div className="grid grid-cols-2 gap-6 pt-4 border-t border-[rgba(255,255,255,0.1)]">
-              <div className="space-y-2">
-                <div className="p-2 w-9 h-9 rounded-lg bg-neutral-900 border border-neutral-800 text-[#9B96FF] flex items-center justify-center">
-                  <Search className="w-5 h-5" />
+              {/* Vibrant & alive icon 1 */}
+              <div className="space-y-2 group">
+                <div className="p-2 w-11 h-11 rounded-xl bg-neutral-900 border border-neutral-800 text-[#9B96FF] flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:text-white shadow-lg">
+                  <Search className="w-6 h-6" />
                 </div>
                 <h4 className="font-bold text-sm">Keyword Research</h4>
                 <p className="text-[11px] text-[#8080A0]">Calculates KD, search volume, and ROI opportunities.</p>
               </div>
 
-              <div className="space-y-2">
-                <div className="p-2 w-9 h-9 rounded-lg bg-neutral-900 border border-neutral-800 text-[#9B96FF] flex items-center justify-center">
-                  <BookOpen className="w-5 h-5" />
+              {/* Vibrant & alive icon 2 */}
+              <div className="space-y-2 group">
+                <div className="p-2 w-11 h-11 rounded-xl bg-neutral-900 border border-neutral-800 text-[#9B96FF] flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:text-white shadow-lg">
+                  <BookOpen className="w-6 h-6" />
                 </div>
                 <h4 className="font-bold text-sm">AI Content Writer</h4>
                 <p className="text-[11px] text-[#8080A0]">Generates 1500+ words with H1/H2 structure and FAQ.</p>
               </div>
 
-              <div className="space-y-2">
-                <div className="p-2 w-9 h-9 rounded-lg bg-neutral-900 border border-neutral-800 text-[#9B96FF] flex items-center justify-center">
-                  <Link2 className="w-5 h-5" />
+              {/* Vibrant & alive icon 3 */}
+              <div className="space-y-2 group">
+                <div className="p-2 w-11 h-11 rounded-xl bg-neutral-900 border border-neutral-800 text-[#9B96FF] flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:text-white shadow-lg">
+                  <Link2 className="w-6 h-6" />
                 </div>
                 <h4 className="font-bold text-sm">Internal Linking</h4>
                 <p className="text-[11px] text-[#8080A0]">Auto-inserts relevant anchor links to existing pages.</p>
               </div>
 
-              <div className="space-y-2">
-                <div className="p-2 w-9 h-9 rounded-lg bg-neutral-900 border border-neutral-800 text-[#9B96FF] flex items-center justify-center">
-                  <Globe className="w-5 h-5" />
+              {/* Vibrant & alive icon 4 */}
+              <div className="space-y-2 group">
+                <div className="p-2 w-11 h-11 rounded-xl bg-neutral-900 border border-neutral-800 text-[#9B96FF] flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:text-white shadow-lg">
+                  <Globe className="w-6 h-6" />
                 </div>
                 <h4 className="font-bold text-sm">WordPress Native</h4>
                 <p className="text-[11px] text-[#8080A0]">Connects securely to your site via REST API.</p>
@@ -499,8 +520,11 @@ export default function Home() {
          ──────────────────────────────────────────────────────── */}
       <footer className="border-t border-[#F0F0FA] bg-white py-12 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-[#8888a8]">
-          <div>
-            {t("footerText")}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#F0F0FA] shadow-sm">
+              <img src="/logo.jpeg" alt="RankPilot Logo" className="w-full h-full object-cover" />
+            </div>
+            <span>{t("footerText")}</span>
           </div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-[#6C63FF]">{t("footerLegal")}</a>
