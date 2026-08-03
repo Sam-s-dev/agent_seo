@@ -25,7 +25,10 @@ import {
   Shield,
   Headphones,
   Sparkle,
-  Briefcase
+  Briefcase,
+  Rocket,
+  Star,
+  Building2
 } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
 
@@ -47,7 +50,7 @@ export default function Home() {
       name: t("priceStarterTitle"),
       price: "$29",
       desc: t("priceStarterDesc"),
-      titleIcon: Zap,
+      titleIcon: Rocket,
       features: [
         { text: t("priceStarterDetail1"), icon: BookOpen },
         { text: t("priceStarterDetail2"), icon: Globe },
@@ -61,7 +64,7 @@ export default function Home() {
       name: t("priceProTitle"),
       price: "$49",
       desc: t("priceProDesc"),
-      titleIcon: Sparkles,
+      titleIcon: Star,
       features: [
         { text: t("priceProDetail1"), icon: BookOpen },
         { text: t("priceProDetail2"), icon: Globe },
@@ -76,7 +79,7 @@ export default function Home() {
       name: t("priceAgencyTitle"),
       price: "$99",
       desc: t("priceAgencyDesc"),
-      titleIcon: Briefcase,
+      titleIcon: Building2,
       features: [
         { text: t("priceAgencyDetail1"), icon: Sparkles },
         { text: t("priceAgencyDetail2"), icon: Globe },
@@ -454,10 +457,8 @@ export default function Home() {
             >
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-1.5 rounded-lg bg-[#F8F7FF] border border-[rgba(108,99,255,0.12)] text-[#6C63FF]">
-                      <plan.titleIcon className="w-4.5 h-4.5 shrink-0" />
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <plan.titleIcon className="w-5 h-5 text-[#6C63FF] shrink-0" />
                     <h3 className="text-base font-bold text-[#1a1a3e]">{plan.name}</h3>
                   </div>
                   {plan.popular && <span className="badge-purple">{t("priceProBadge")}</span>}
