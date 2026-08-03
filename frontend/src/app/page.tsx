@@ -117,7 +117,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
             {/* Real Logo from public folder */}
-            <div className="w-14 h-14 rounded-xl overflow-hidden border border-[rgba(108,99,255,0.2)] shadow-md hover:scale-105 transition-transform duration-200">
+            <div className="w-20 h-20 rounded-xl overflow-hidden border border-white shadow-md hover:scale-105 transition-transform duration-200">
               <img src="/logo.jpeg" alt="RankPilot Logo" className="w-full h-full object-cover" />
             </div>
           </div>
@@ -518,7 +518,7 @@ export default function Home() {
       <footer className="border-t border-[#F0F0FA] bg-white py-12 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-[#8888a8]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#F0F0FA] shadow-sm">
+            <div className="w-12 h-12 rounded-lg overflow-hidden border border-white shadow-sm">
               <img src="/logo.jpeg" alt="RankPilot Logo" className="w-full h-full object-cover" />
             </div>
             <span>{t("footerText")}</span>

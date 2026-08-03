@@ -65,7 +65,7 @@ export default function Login() {
         {/* Logo and Brand */}
         <div className="flex flex-col items-center mb-8">
           <Link href="/" className="flex flex-col items-center gap-2 mb-2">
-            <div className="w-16 h-16 rounded-xl overflow-hidden border border-[rgba(108,99,255,0.2)] shadow-md hover:scale-105 transition-transform duration-200">
+            <div className="w-24 h-24 rounded-xl overflow-hidden border border-white shadow-md hover:scale-105 transition-transform duration-200">
               <img src="/logo.jpeg" alt="RankPilot Logo" className="w-full h-full object-cover" />
             </div>
           </Link>
