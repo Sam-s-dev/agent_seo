@@ -117,12 +117,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
             {/* Real Logo from public folder */}
-            <div className="w-10 h-10 rounded-xl overflow-hidden border border-[rgba(108,99,255,0.2)] shadow-md hover:scale-105 transition-transform duration-200">
+            <div className="w-14 h-14 rounded-xl overflow-hidden border border-[rgba(108,99,255,0.2)] shadow-md hover:scale-105 transition-transform duration-200">
               <img src="/logo.jpeg" alt="RankPilot Logo" className="w-full h-full object-cover" />
             </div>
-            <span className="text-xl font-bold tracking-tight text-[#1a1a3e] hover:text-[#6C63FF] transition-colors">
-              {t("brand")}
-            </span>
           </div>
 
           {/* Desktop Nav */}
