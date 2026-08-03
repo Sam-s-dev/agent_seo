@@ -19,7 +19,12 @@ import {
   Search,
   BookOpen,
   Link2,
-  Zap
+  Zap,
+  RefreshCw,
+  LayoutDashboard,
+  Shield,
+  Headphones,
+  Sparkle
 } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
 
@@ -35,17 +40,17 @@ export default function Home() {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
-  // Pricing plans
+  // Pricing plans with descriptive B2B outline icons (Hugeicons / Five Icons style)
   const pricingPlans = [
     {
       name: t("priceStarterTitle"),
       price: "$29",
       desc: t("priceStarterDesc"),
       features: [
-        t("priceStarterDetail1"),
-        t("priceStarterDetail2"),
-        t("priceStarterDetail3"),
-        t("priceStarterDetail4"),
+        { text: t("priceStarterDetail1"), icon: BookOpen },
+        { text: t("priceStarterDetail2"), icon: Globe },
+        { text: t("priceStarterDetail3"), icon: Search },
+        { text: t("priceStarterDetail4"), icon: Zap },
       ],
       buttonText: t("ctaStarter"),
       popular: false,
@@ -55,11 +60,11 @@ export default function Home() {
       price: "$49",
       desc: t("priceProDesc"),
       features: [
-        t("priceProDetail1"),
-        t("priceProDetail2"),
-        t("priceProDetail3"),
-        t("priceProDetail4"),
-        t("priceProDetail5"),
+        { text: t("priceProDetail1"), icon: BookOpen },
+        { text: t("priceProDetail2"), icon: Globe },
+        { text: t("priceProDetail3"), icon: TrendingUp },
+        { text: t("priceProDetail4"), icon: RefreshCw },
+        { text: t("priceProDetail5"), icon: LayoutDashboard },
       ],
       buttonText: t("ctaPro"),
       popular: true,
@@ -69,10 +74,10 @@ export default function Home() {
       price: "$99",
       desc: t("priceAgencyDesc"),
       features: [
-        t("priceAgencyDetail1"),
-        t("priceAgencyDetail2"),
-        t("priceAgencyDetail3"),
-        t("priceAgencyDetail4"),
+        { text: t("priceAgencyDetail1"), icon: Sparkles },
+        { text: t("priceAgencyDetail2"), icon: Globe },
+        { text: t("priceAgencyDetail3"), icon: Shield },
+        { text: t("priceAgencyDetail4"), icon: Headphones },
       ],
       buttonText: t("ctaAgency"),
       popular: false,
@@ -185,9 +190,9 @@ export default function Home() {
             <div className="relative bg-white border border-[rgba(108,99,255,0.12)] rounded-2xl p-6 shadow-xl">
               <div className="flex items-center justify-between pb-3 border-b border-[#F0F0FA] mb-5">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-450" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-450" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-450" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-green-400" />
                 </div>
                 <span className="text-[10px] font-mono text-[#8888a8]">rankpilot.ai/live</span>
               </div>
@@ -453,13 +458,20 @@ export default function Home() {
                 </div>
                 <p className="text-xs text-[#555580] mb-6">{plan.desc}</p>
                 <hr className="border-[#F0F0FA] mb-6" />
-                <ul className="space-y-3.5 text-xs text-[#555580]">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-[#6C63FF] shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
+                
+                {/* Specific descriptive outlines icons */}
+                <ul className="space-y-4 text-xs text-[#555580]">
+                  {plan.features.map((feature, idx) => {
+                    const FeatureIcon = feature.icon;
+                    return (
+                      <li key={idx} className="flex items-center gap-3 group">
+                        <div className="p-1.5 rounded-lg bg-[#F8F7FF] border border-[rgba(108,99,255,0.12)] text-[#6C63FF] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-200">
+                          <FeatureIcon className="w-4.5 h-4.5 shrink-0" />
+                        </div>
+                        <span className="group-hover:text-[#1a1a3e] transition-colors">{feature.text}</span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 
